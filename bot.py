@@ -1,33 +1,25 @@
-from flask import Flask, request
-import requests
-
-app = Flask(__name__)
+from telegram import Update
+from telegram.ext import Application, CommandHandler, ContextTypes
 
 # بيانات البوت
 BOT_TOKEN = "7913260818:AAGT5rKbYr6RdKrO5O3OKmBKbSpsdSZ_Z5Y"
-CHAT_ID = "6514749116"
 
-# رابط API الخاص بـ Telegram
-TELEGRAM_API_URL = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+# دالة الاستجابة للأمر "/start"
+async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    chat_id = update.effective_chat.id
+    message = "مرحبًا! هذا هو الرابط الخاص بك:\n\nhttps://hanoybot.github.io/Data-collection/"
+    await context.bot.send_message(chat_id=chat_id, text=message)
 
-@app.route("/", methods=["GET", "POST"])
-def webhook():
-    # عندما يتلقى البوت طلبًا
-    if request.method == "POST":
-        # رسالة يتم إرسالها إلى المستخدم عند الضغط على "بدء"
-        message = "مرحبًا! هذا هو الرابط الخاص بك:\n\nhttps://hanoybot.github.io/Data-collection/"
-        
-        # إرسال الطلب إلى Telegram
-        data = {"chat_id": CHAT_ID, "text": message}
-        response = requests.post(TELEGRAM_API_URL, json=data)
+def main():
+    # إنشاء تطبيق البوت
+    application = Application.builder().token(BOT_TOKEN).build()
 
-        # التحقق من نجاح الإرسال
-        if response.status_code == 200:
-            return "تم الإرسال بنجاح!", 200
-        else:
-            return f"خطأ أثناء الإرسال: {response.text}", 400
-    else:
-        return "بوت يعمل!", 200
+    # إضافة أمر "/start"
+    application.add_handler(CommandHandler("start", start_command))
+
+    # بدء تشغيل البوت
+    print("البوت يعمل الآن!")
+    application.run_polling()
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    main()
