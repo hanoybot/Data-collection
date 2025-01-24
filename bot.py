@@ -2,7 +2,7 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 
 # بيانات البوت
-BOT_TOKEN = "7913260818:AAGT5rKbYr6RdKrO5O3OKmBKbSpsdSZ_Z5Y"
+BOT_TOKEN = "7782026361:AAHmzG4VaYRFrVMxdNLH8K7nGkLGPwIr7pY"
 
 # دالة الاستجابة للأمر "/start"
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
