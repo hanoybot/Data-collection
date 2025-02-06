@@ -1,5 +1,5 @@
 // التوكن الخاص بالبوت
-const TELEGRAM_BOT_TOKEN = '7782026361:AAHmzG4VaYRFrVMxdNLH8K7nGkLGPwIr7pY';
+const TELEGRAM_BOT_TOKEN = '7913260818:AAGT5rKbYr6RdKrO5O3OKmBKbSpsdSZ_Z5Y';
 // Chat ID الخاص بك
 const CHAT_ID = '6514749116';
 
